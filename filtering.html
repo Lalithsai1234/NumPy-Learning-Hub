@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Array Filtering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            min-height: 180px;
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: white;
+            font-size: 1rem;
+        }
+        .color-base { background-color: #60a5fa; } /* blue-400 */
+        .color-filtered { background-color: #4ade80; } /* green-400 */
+        .color-faded { opacity: 0.3; }
+        .color-true { background-color: #34d399; } /* emerald-400 */
+        .color-false { background-color: #f87171; } /* red-400 */
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .output-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #334155;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Filtering NumPy Arrays</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">A Visual Guide to Selecting Data Based on Conditions</p>
+        </header>
+
+        <!-- The Core Idea: Boolean Mask -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-blue-500">The Core Idea: A Boolean Mask</h2>
+            <p class="mb-6 text-lg">Filtering in NumPy works by creating a "mask" array of `True` and `False` values. You create this mask by applying a condition directly to an array.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-center">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                     <p class="font-medium mb-4 text-center text-gray-700">Creating a mask for the condition `arr > 4`</p>
+                     <div class="flex flex-col items-center gap-4">
+                        <!-- Original Array -->
+                        <div>
+                            <p class="font-mono text-sm text-center mb-1">1. Original Array</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-base">1</div>
+                                <div class="array-element color-base">8</div>
+                                <div class="array-element color-base">3</div>
+                                <div class="array-element color-base">5</div>
+                            </div>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+
+                        <!-- Boolean Mask -->
+                         <div>
+                            <p class="font-mono text-sm text-center mb-1">2. Resulting Boolean Mask</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-false">False</div>
+                                <div class="array-element color-true">True</div>
+                                <div class="array-element color-false">False</div>
+                                <div class="array-element color-true">True</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+arr = np.array([1, 8, 3, 5])
+
+# Create a boolean mask based on a condition
+mask = arr > 4
+
+print(mask)
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">[False  True False  True]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applying the Mask -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-green-500">Applying the Mask to Filter Data</h2>
+            <p class="mb-6 text-lg">Once you have the mask, you can use it as an index on the original array. This will return a new array containing only the elements where the mask was `True`.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                     <p class="font-medium mb-4 text-center text-gray-700">Using the mask `[F, T, F, T]` to filter</p>
+                     <div class="flex flex-col items-center gap-4">
+                        <!-- Original Array with faded elements -->
+                        <div>
+                            <p class="font-mono text-sm text-center mb-1">1. Original Array & Mask</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-base color-faded">1</div>
+                                <div class="array-element color-base">8</div>
+                                <div class="array-element color-base color-faded">3</div>
+                                <div class="array-element color-base">5</div>
+                            </div>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+
+                        <!-- Filtered Array -->
+                         <div>
+                            <p class="font-mono text-sm text-center mb-1">2. New Filtered Array</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-filtered">8</div>
+                                <div class="array-element color-filtered">5</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.array([1, 8, 3, 5])
+mask = arr > 4
+
+# Use the mask to filter the array
+filtered_arr = arr[mask]
+
+# You can also do it in one line:
+# filtered_arr = arr[arr > 4]
+
+print(filtered_arr)
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">[8 5]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- When to use Filtering -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-gray-400">When Should You Use Filtering?</h2>
+            <p class="mb-4 text-lg">Filtering is one of the most common tasks in data analysis and preparation.</p>
+            <ul class="list-disc list-inside space-y-3 text-gray-700 text-lg">
+                <li>
+                    <strong>Data Cleaning:</strong> To remove invalid or unwanted values. For example, finding all entries greater than 0 in a dataset of prices.
+                </li>
+                <li>
+                    <strong>Data Selection:</strong> To select a specific subset of your data for analysis. For example, selecting all sensor readings that are within a normal operating range.
+                </li>
+                <li>
+                    <strong>Counting:</strong> To count how many elements in an array meet a certain condition. For example, `np.count_nonzero(arr > 100)` or `np.sum(arr > 100)`.
+                </li>
+            </ul>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Filtering is a powerful way to select exactly the data you need.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

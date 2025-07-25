@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Shape and Reshape</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: white;
+            font-size: 0.875rem;
+        }
+        .color-1d { background-color: #60a5fa; } /* blue-400 */
+        .color-2d { background-color: #4ade80; } /* green-400 */
+        .color-3d { background-color: #a78bfa; } /* violet-400 */
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .shape-box {
+            background-color: #f1f5f9; /* slate-100 */
+            border: 2px dashed #cbd5e1; /* slate-300 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #475569; /* slate-600 */
+        }
+        .sub-section {
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">NumPy: Shape and Reshape</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">A Visual Guide to Structuring Your Arrays</p>
+        </header>
+
+        <!-- What is Shape? -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-blue-500">Part 1: What is an Array's Shape?</h2>
+            <p class="mb-6 text-lg">The <strong>shape</strong> of an array describes its dimensions. It tells you how many elements you have along each axis. For a 2D array, this is simply `(rows, columns)`.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-center">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">An array with 2 rows and 4 columns</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="flex justify-center gap-2"><div class="array-element color-1d">0</div><div class="array-element color-1d">1</div><div class="array-element color-1d">2</div><div class="array-element color-1d">3</div></div>
+                            <div class="flex justify-center gap-2"><div class="array-element color-1d">4</div><div class="array-element color-1d">5</div><div class="array-element color-1d">6</div><div class="array-element color-1d">7</div></div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        <div class="shape-box">Shape: (2, 4)</div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+arr = np.array([[0, 1, 2, 3],
+                [4, 5, 6, 7]])
+
+# Check the shape
+print(arr.shape)
+
+# Output: (2, 4)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reshaping Arrays -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-green-500">Part 2: What is Reshaping?</h2>
+            <p class="mb-6 text-lg"><strong>Reshaping</strong> means changing the shape of an array. You can change the number of rows and columns, but the total number of elements must remain the same.</p>
+            <p class="mb-6 text-lg bg-yellow-100 p-3 rounded-lg border border-yellow-300"><strong>The Golden Rule:</strong> The product of the dimensions must be constant. For example, an array with 12 elements can be shaped as `(1, 12)`, `(12, 1)`, `(3, 4)`, or `(4, 3)` because `1*12 = 3*4 = 12`.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Reshaping a 1D array of 12 elements to a 3x4 2D array</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">Original 1D Array, Shape: (12,)</p><div class="flex flex-wrap justify-center gap-2"><div class="array-element color-1d">0</div><div class="array-element color-1d">1</div><div class="array-element color-1d">2</div><div class="array-element color-1d">3</div><div class="array-element color-1d">4</div><div class="array-element color-1d">5</div><div class="array-element color-1d">6</div><div class="array-element color-1d">7</div><div class="array-element color-1d">8</div><div class="array-element color-1d">9</div><div class="array-element color-1d">10</div><div class="array-element color-1d">11</div></div></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">New 2D Array, Shape: (3, 4)</p><div class="flex flex-col gap-2"><div class="flex justify-center gap-2"><div class="array-element color-2d">0</div><div class="array-element color-2d">1</div><div class="array-element color-2d">2</div><div class="array-element color-2d">3</div></div><div class="flex justify-center gap-2"><div class="array-element color-2d">4</div><div class="array-element color-2d">5</div><div class="array-element color-2d">6</div><div class="array-element color-2d">7</div></div><div class="flex justify-center gap-2"><div class="array-element color-2d">8</div><div class="array-element color-2d">9</div><div class="array-element color-2d">10</div><div class="array-element color-2d">11</div></div></div></div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+# A 1D array with 12 elements
+arr_1d = np.arange(12)
+print(f"Original shape: {arr_1d.shape}")
+
+# Reshape it into a 2D array with 3 rows, 4 cols
+arr_2d = arr_1d.reshape(3, 4)
+
+print("Reshaped array:")
+print(arr_2d)
+print(f"New shape: {arr_2d.shape}")
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Reshaping Examples -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-violet-500">Part 3: More Reshaping Examples</h2>
+            
+            <!-- Example 1: 2D to another 2D -->
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Reshaping from (3, 4) to (4, 3)</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">Original Shape: (3, 4)</p><div class="flex flex-col gap-2"><div class="flex justify-center gap-2"><div class="array-element color-2d">0</div><div class="array-element color-2d">1</div><div class="array-element color-2d">2</div><div class="array-element color-2d">3</div></div><div class="flex justify-center gap-2"><div class="array-element color-2d">4</div><div class="array-element color-2d">5</div><div class="array-element color-2d">6</div><div class="array-element color-2d">7</div></div><div class="flex justify-center gap-2"><div class="array-element color-2d">8</div><div class="array-element color-2d">9</div><div class="array-element color-2d">10</div><div class="array-element color-2d">11</div></div></div></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">New Shape: (4, 3)</p><div class="flex flex-col gap-2"><div class="flex justify-center gap-2"><div class="array-element color-3d">0</div><div class="array-element color-3d">1</div><div class="array-element color-3d">2</div></div><div class="flex justify-center gap-2"><div class="array-element color-3d">3</div><div class="array-element color-3d">4</div><div class="array-element color-3d">5</div></div><div class="flex justify-center gap-2"><div class="array-element color-3d">6</div><div class="array-element color-3d">7</div><div class="array-element color-3d">8</div></div><div class="flex justify-center gap-2"><div class="array-element color-3d">9</div><div class="array-element color-3d">10</div><div class="array-element color-3d">11</div></div></div></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.arange(12).reshape(3, 4)
+
+# Reshape from 3x4 to 4x3
+reshaped_arr = arr.reshape(4, 3)
+
+print(reshaped_arr)
+# [[ 0  1  2]
+#  [ 3  4  5]
+#  [ 6  7  8]
+#  [ 9 10 11]]
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Flattening -->
+            <div class="sub-section grid lg:grid-cols-2 gap-8 items-start">
+                 <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Flattening: Reshaping to 1D</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">Original Shape: (2, 3)</p><div class="flex flex-col gap-2"><div class="flex justify-center gap-2"><div class="array-element color-2d">0</div><div class="array-element color-2d">1</div><div class="array-element color-2d">2</div></div><div class="flex justify-center gap-2"><div class="array-element color-2d">3</div><div class="array-element color-2d">4</div><div class="array-element color-2d">5</div></div></div></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">New Shape: (6,)</p><div class="flex flex-wrap justify-center gap-2"><div class="array-element color-1d">0</div><div class="array-element color-1d">1</div><div class="array-element color-1d">2</div><div class="array-element color-1d">3</div><div class="array-element color-1d">4</div><div class="array-element color-1d">5</div></div></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.arange(6).reshape(2, 3)
+
+# Flatten the array
+# Using -1 automatically calculates the size
+flat_arr = arr.reshape(-1)
+
+print(flat_arr)
+# [0 1 2 3 4 5]
+print(flat_arr.shape)
+# (6,)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Unknown Dimension -->
+            <div class="sub-section grid lg:grid-cols-2 gap-8 items-start">
+                 <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Using -1 for an Unknown Dimension</p>
+                    <p class="text-sm text-center mb-4">If you provide one dimension as -1, NumPy will automatically calculate the correct size for that dimension based on the array's total number of elements.</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">arr.reshape(2, -1)</p><div class="shape-box">NumPy calculates this as (2, 6)</div></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
+                        <div class="flex flex-col items-center"><p class="text-sm font-mono text-gray-500 mb-1">arr.reshape(-1, 4)</p><div class="shape-box">NumPy calculates this as (3, 4)</div></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.arange(12)
+
+# Reshape to have 2 rows, and let NumPy
+# figure out the number of columns.
+arr_2_rows = arr.reshape(2, -1)
+print(arr_2_rows.shape)
+# (2, 6)
+
+# Reshape to have 4 columns, and let NumPy
+# figure out the number of rows.
+arr_4_cols = arr.reshape(-1, 4)
+print(arr_4_cols.shape)
+# (3, 4)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Shaping and reshaping are essential for preparing data for analysis and machine learning.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

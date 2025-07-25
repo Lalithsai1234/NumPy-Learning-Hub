@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Array Searching</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            min-height: 180px;
+        }
+        .array-element {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .index-label {
+            font-size: 0.7rem;
+            color: #4b5563;
+            margin-top: 50px;
+            position: absolute;
+        }
+        .array-element-highlight {
+            background-color: #facc15 !important; /* yellow-400 */
+            color: #1f2937;
+        }
+        .color-base { background-color: #60a5fa; } /* blue-400 */
+        .color-sorted { background-color: #4ade80; } /* green-400 */
+        .color-result { background-color: #a78bfa; } /* violet-400 */
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .output-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #334155;
+            white-space: pre;
+        }
+        .insertion-point {
+            width: 5px;
+            height: 60px;
+            background-color: #ef4444; /* red-500 */
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">NumPy Array Searching</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">A Visual Guide to Finding Your Data</p>
+        </header>
+
+        <!-- Searching with where() -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-blue-500">1. Finding Indices with `np.where()`</h2>
+            <p class="mb-6 text-lg">The `np.where()` method returns the indices (locations) of elements where a given condition is true. It's like asking "Where in the array are the values that match my rule?".</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Find where `arr == 4`</p>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="flex justify-center gap-2">
+                            <div class="array-element color-base">1<span class="index-label">0</span></div>
+                            <div class="array-element color-base">2<span class="index-label">1</span></div>
+                            <div class="array-element color-base">3<span class="index-label">2</span></div>
+                            <div class="array-element color-base array-element-highlight">4<span class="index-label">3</span></div>
+                            <div class="array-element color-base">5<span class="index-label">4</span></div>
+                            <div class="array-element color-base array-element-highlight">4<span class="index-label">5</span></div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-10 text-sm text-gray-600">The condition is true at indices 3 and 5.</p>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 4])
+
+# Find all indices where the value is 4
+indices = np.where(arr == 4)
+
+print(indices)
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">(array([3, 5]),)</div>
+                    <p class="text-sm mt-2 text-gray-600">The output is a tuple containing an array of the indices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Searching with searchsorted() -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-green-500">2. Finding Insertion Points with `np.searchsorted()`</h2>
+            <p class="mb-6 text-lg">The `np.searchsorted()` method works on <strong>sorted arrays</strong> and tells you where a value should be inserted to maintain the sorted order. By default (`side='left'`), it gives the first possible index.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-4 text-center text-gray-700">Find where to insert the value `7`</p>
+                     <div class="flex flex-col items-center gap-2">
+                        <div class="flex justify-center items-center gap-2">
+                            <div class="array-element color-sorted">1<span class="index-label">0</span></div>
+                            <div class="array-element color-sorted">2<span class="index-label">1</span></div>
+                            <div class="array-element color-sorted">4<span class="index-label">2</span></div>
+                            <div class="insertion-point mx-1"></div>
+                            <div class="array-element color-sorted">8<span class="index-label">3</span></div>
+                            <div class="array-element color-sorted">9<span class="index-label">4</span></div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-10 text-sm text-gray-600">To keep the array sorted, `7` should be inserted at index `3`.</p>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+# searchsorted only works on sorted arrays
+arr = np.array([1, 2, 4, 8, 9])
+
+# Find the index where 7 should be inserted
+index = np.searchsorted(arr, 7)
+
+print(index)
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- searchsorted() with side='right' -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-red-500">3. Using `side='right'` for the Highest Index</h2>
+            <p class="mb-6 text-lg">You can use the `side='right'` argument in `np.searchsorted()` to get the index on the right-hand side of any existing matching elements. This gives you the last possible position for insertion.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                     <p class="font-medium mb-4 text-center text-gray-700">Find where to insert `8` using `side='right'`</p>
+                     <div class="flex flex-col items-center gap-2">
+                        <div class="flex justify-center items-center gap-2">
+                            <div class="array-element color-sorted">4<span class="index-label">0</span></div>
+                            <div class="array-element color-sorted">6<span class="index-label">1</span></div>
+                            <div class="array-element color-sorted">8<span class="index-label">2</span></div>
+                            <div class="array-element color-sorted">8<span class="index-label">3</span></div>
+                            <div class="insertion-point mx-1"></div>
+                            <div class="array-element color-sorted">9<span class="index-label">4</span></div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-10 text-sm text-gray-600">The rightmost insertion point for `8` is at index `4`.</p>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+arr = np.array([4, 6, 8, 8, 9])
+
+# Find the index on the left side (default)
+left_index = np.searchsorted(arr, 8, side='left')
+print(f"Left side index: {left_index}")
+
+# Find the index on the right side
+right_index = np.searchsorted(arr, 8, side='right')
+print(f"Right side index: {right_index}")
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">Left side index: 2
+Right side index: 4</div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Use `where` for conditional searching and `searchsorted` for fast searching in sorted data.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

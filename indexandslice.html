@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Array Indexing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: white;
+            font-size: 0.875rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .array-element-indexed {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+            border: 2px solid yellow;
+        }
+        .array-element-faded {
+            opacity: 0.3;
+        }
+        .color-base { background-color: #60a5fa; } /* blue-400 */
+        .color-slice { background-color: #4ade80; } /* green-400 */
+        .color-fancy { background-color: #fb923c; } /* orange-400 */
+        .color-bool { background-color: #f472b6; } /* pink-400 */
+        .color-result { background-color: #a78bfa; } /* violet-400 */
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .sub-section {
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Visualizing NumPy Indexing</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">A Guide to Accessing and Modifying Array Data</p>
+        </header>
+
+        <!-- Basic Indexing & Slicing -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-blue-500">1. Basic Indexing & Slicing</h2>
+            <p class="mb-6 text-lg">Accessing elements using integer indices (`[row, col]`) and slices (`start:stop:step`).</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <!-- Step 1: Single Element -->
+                    <div>
+                        <p class="font-medium mb-2 text-center text-gray-700">Step 1: Get a Single Element `arr[1, 2]`</p>
+                         <div class="flex flex-col items-center gap-2">
+                            <div class="flex justify-center gap-1 text-xs text-gray-500 w-full"><div class="w-10"></div><div class="w-10 text-center">0</div><div class="w-10 text-center">1</div><div class="w-10 text-center">2</div><div class="w-10 text-center">3</div></div>
+                            <div class="flex items-center gap-2"><div class="text-xs text-gray-500 w-10 text-right pr-2">0</div><div class="array-element color-base">0</div><div class="array-element color-base">1</div><div class="array-element color-base">2</div><div class="array-element color-base">3</div></div>
+                            <div class="flex items-center gap-2"><div class="text-xs text-gray-500 w-10 text-right pr-2">1</div><div class="array-element color-base">4</div><div class="array-element color-base">5</div><div class="array-element color-base array-element-indexed">6</div><div class="array-element color-base">7</div></div>
+                             <div class="flex items-center gap-2"><div class="text-xs text-gray-500 w-10 text-right pr-2">2</div><div class="array-element color-base">8</div><div class="array-element color-base">9</div><div class="array-element color-base">10</div><div class="array-element color-base">11</div></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Slicing a Region -->
+                    <div class="sub-section">
+                        <p class="font-medium mb-2 text-center text-gray-700">Step 2: Slice a Region `arr[0:2, 1:3]`</p>
+                        <div class="flex justify-around items-center">
+                            <div class="flex flex-col items-center gap-2">
+                               <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">0</div><div class="array-element color-slice">1</div><div class="array-element color-slice">2</div><div class="array-element color-base array-element-faded">3</div></div>
+                                <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">4</div><div class="array-element color-slice">5</div><div class="array-element color-slice">6</div><div class="array-element color-base array-element-faded">7</div></div>
+                                 <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">8</div><div class="array-element color-base array-element-faded">9</div><div class="array-element color-base array-element-faded">10</div><div class="array-element color-base array-element-faded">11</div></div>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            <div class="flex flex-col items-center gap-2"><div class="flex items-center gap-2"><div class="array-element color-result">1</div><div class="array-element color-result">2</div></div><div class="flex items-center gap-2"><div class="array-element color-result">5</div><div class="array-element color-result">6</div></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Combining Indexing and Slicing -->
+                     <div class="sub-section">
+                        <p class="font-medium mb-2 text-center text-gray-700">Step 3: Get a Full Column `arr[:, 2]`</p>
+                        <div class="flex justify-around items-center">
+                            <div class="flex flex-col items-center gap-2">
+                               <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">0</div><div class="array-element color-base array-element-faded">1</div><div class="array-element color-slice">2</div><div class="array-element color-base array-element-faded">3</div></div>
+                               <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">4</div><div class="array-element color-base array-element-faded">5</div><div class="array-element color-slice">6</div><div class="array-element color-base array-element-faded">7</div></div>
+                               <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">8</div><div class="array-element color-base array-element-faded">9</div><div class="array-element color-slice">10</div><div class="array-element color-base array-element-faded">11</div></div>
+                            </div>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            <div class="flex flex-col items-center gap-2"><div class="array-element color-result">2</div><div class="array-element color-result">6</div><div class="array-element color-result">10</div></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Slicing with a Step -->
+                    <div class="sub-section">
+                        <p class="font-medium mb-2 text-center text-gray-700">Step 4: Slice with a Step `arr[::2, ::2]`</p>
+                        <div class="flex justify-around items-center">
+                            <div class="flex flex-col items-center gap-2">
+                               <div class="flex items-center gap-2"><div class="array-element color-slice">0</div><div class="array-element color-base array-element-faded">1</div><div class="array-element color-slice">2</div><div class="array-element color-base array-element-faded">3</div></div>
+                               <div class="flex items-center gap-2"><div class="array-element color-base array-element-faded">4</div><div class="array-element color-base array-element-faded">5</div><div class="array-element color-base array-element-faded">6</div><div class="array-element color-base array-element-faded">7</div></div>
+                               <div class="flex items-center gap-2"><div class="array-element color-slice">8</div><div class="array-element color-base array-element-faded">9</div><div class="array-element color-slice">10</div><div class="array-element color-base array-element-faded">11</div></div>
+                            </div>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            <div class="flex flex-col items-center gap-2"><div class="flex items-center gap-2"><div class="array-element color-result">0</div><div class="array-element color-result">2</div></div><div class="flex items-center gap-2"><div class="array-element color-result">8</div><div class="array-element color-result">10</div></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+arr = np.arange(12).reshape(3, 4)
+
+# Step 1: Basic indexing (row 1, col 2)
+element = arr[1, 2]
+# element is 6
+
+# Step 2: Slicing a region
+# Rows 0-1, Cols 1-2
+sub_array = arr[0:2, 1:3]
+# [[1 2]
+#  [5 6]]
+
+# Step 3: Get a full row or column
+# The ':' means "get everything"
+row = arr[1, :]   # Get row 1 -> [4 5 6 7]
+col = arr[:, 2]   # Get col 2 -> [2 6 10]
+
+# Step 4: Slicing with a step
+# Format is start:stop:step
+# Get every 2nd row and every 2nd column
+stepped = arr[::2, ::2]
+# [[0  2]
+#  [8 10]]
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integer Array Indexing -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-orange-500">2. Integer Array Indexing</h2>
+            <p class="mb-6 text-lg">Also known as "fancy indexing," this allows you to construct a new array by picking elements using lists or arrays of indices.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                 <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-2 text-center text-gray-700">Accessing `arr[[0, 2, 3]]`</p>
+                    <div class="flex justify-around items-center">
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-sm font-mono">arr</p>
+                            <div class="flex flex-col gap-1">
+                                <div class="array-element color-fancy">10</div>
+                                <div class="array-element color-base array-element-faded">20</div>
+                                <div class="array-element color-fancy">30</div>
+                                <div class="array-element color-fancy">40</div>
+                                <div class="array-element color-base array-element-faded">50</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                             <p class="text-sm font-mono">indices</p>
+                             <div class="flex flex-col gap-1">
+                                <div class="array-element color-result">0</div>
+                                <div class="array-element color-result">2</div>
+                                <div class="array-element color-result">3</div>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-sm font-mono">result</p>
+                            <div class="flex flex-col gap-1">
+                                <div class="array-element color-fancy">10</div>
+                                <div class="array-element color-fancy">30</div>
+                                <div class="array-element color-fancy">40</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.array([10, 20, 30, 40, 50])
+
+# Provide a list of indices to select
+indices = [0, 2, 3]
+result = arr[indices]
+
+# result is: [10 30 40]
+
+# You can also use it for 2D arrays
+arr2d = np.arange(9).reshape(3, 3)
+# Select rows 0 and 2
+rows = arr2d[[0, 2]]
+# rows is:
+# [[0 1 2]
+#  [6 7 8]]
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Boolean Array Indexing -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-pink-500">3. Boolean Array Indexing</h2>
+            <p class="mb-6 text-lg">This allows you to select elements from an array based on a condition, using an array of boolean values (a "mask").</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-2 text-center text-gray-700">Accessing `arr[arr > 3]`</p>
+                     <div class="flex justify-around items-center">
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-sm font-mono">arr</p>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex gap-1"><div class="array-element color-base array-element-faded">1</div><div class="array-element color-base array-element-faded">2</div></div>
+                                <div class="flex gap-1"><div class="array-element color-base array-element-faded">3</div><div class="array-element color-bool">4</div></div>
+                                <div class="flex gap-1"><div class="array-element color-bool">5</div><div class="array-element color-bool">6</div></div>
+                            </div>
+                        </div>
+                         <div class="flex flex-col items-center gap-2">
+                             <p class="text-sm font-mono">mask `arr > 3`</p>
+                             <div class="flex flex-col gap-1">
+                                <div class="flex gap-1"><div class="array-element bg-red-400">F</div><div class="array-element bg-red-400">F</div></div>
+                                <div class="flex gap-1"><div class="array-element bg-red-400">F</div><div class="array-element bg-green-400">T</div></div>
+                                <div class="flex gap-1"><div class="array-element bg-green-400">T</div><div class="array-element bg-green-400">T</div></div>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-sm font-mono">result</p>
+                            <div class="flex gap-1">
+                                <div class="array-element color-result">4</div>
+                                <div class="array-element color-result">5</div>
+                                <div class="array-element color-result">6</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>arr = np.arange(1, 7).reshape(3, 2)
+# arr is:
+# [[1 2]
+#  [3 4]
+#  [5 6]]
+
+# Create a boolean mask
+mask = arr > 3
+# mask is:
+# [[False False]
+#  [False  True]
+#  [ True  True]]
+
+# Apply the mask
+result = arr[mask]
+# result is: [4 5 6]
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Mastering indexing is key to effective data manipulation in NumPy.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

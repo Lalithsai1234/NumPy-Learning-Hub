@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Array Dimensions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .dimension-card {
+            background-color: white;
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem; /* 24px */
+            margin-bottom: 2rem; /* 32px */
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6; /* gray-100 */
+            border: 2px solid #e5e7eb; /* gray-200 */
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 0.25rem; /* 4px */
+            font-weight: 500;
+            color: white;
+            font-size: 0.875rem; /* 14px */
+        }
+        .color-1d { background-color: #60a5fa; } /* blue-400 */
+        .color-2d { background-color: #4ade80; } /* green-400 */
+        .color-3d { background-color: #a78bfa; } /* violet-400 */
+        
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Visualizing NumPy Dimensions</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">An Interactive Guide to Creating 1D, 2D, and 3D Arrays</p>
+        </header>
+
+        <!-- 1D Array (Vector) -->
+        <section class="dimension-card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-blue-500">1D Array (Vector)</h2>
+            <p class="mb-6 text-lg">The simplest form of a NumPy array. It's a single list of elements, like a vector in mathematics. It has one axis (axis 0).</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-2 text-center text-gray-700">Shape: (4,)</p>
+                    <div class="flex justify-center gap-2">
+                        <div class="array-element color-1d">1</div>
+                        <div class="array-element color-1d">2</div>
+                        <div class="array-element color-1d">3</div>
+                        <div class="array-element color-1d">4</div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+# Create a 1D array
+arr_1d = np.array([1, 2, 3, 4])
+
+print(arr_1d.ndim) # 1
+print(arr_1d.shape) # (4,)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2D Array (Matrix) -->
+        <section class="dimension-card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-green-500">2D Array (Matrix)</h2>
+            <p class="mb-6 text-lg">A 2D array is like a table or a spreadsheet, with rows and columns. It has two axes: axis 0 (for rows) and axis 1 (for columns).</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-2 text-center text-gray-700">Shape: (2, 3)</p>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="flex justify-center gap-2">
+                            <div class="array-element color-2d">1</div><div class="array-element color-2d">2</div><div class="array-element color-2d">3</div>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <div class="array-element color-2d">4</div><div class="array-element color-2d">5</div><div class="array-element color-2d">6</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code># Create a 2D array (2 rows, 3 columns)
+arr_2d = np.array([[1, 2, 3], 
+                   [4, 5, 6]])
+
+print(arr_2d.ndim) # 2
+print(arr_2d.shape) # (2, 3)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D Array (Tensor) -->
+        <section class="dimension-card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-violet-500">3D Array (Tensor)</h2>
+            <p class="mb-6 text-lg">A 3D array can be visualized as a collection of 2D arrays (matrices) stacked together. It has three axes: axis 0 (depth), axis 1 (rows), and axis 2 (columns).</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                    <p class="font-medium mb-2 text-center text-gray-700">Shape: (2, 2, 2)</p>
+                    <p class="text-sm text-center text-gray-500 mb-4">Visualized as 2 matrices of shape (2, 2)</p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                        <!-- Matrix 0 -->
+                        <div class="flex flex-col items-center">
+                            <p class="font-mono text-xs mb-1 text-gray-600">Axis 0, Index 0</p>
+                            <div class="flex flex-col gap-2 p-3 border rounded-md bg-white shadow-sm">
+                                <div class="flex justify-center gap-2">
+                                    <div class="array-element color-3d">1</div>
+                                    <div class="array-element color-3d">2</div>
+                                </div>
+                                <div class="flex justify-center gap-2">
+                                    <div class="array-element color-3d">3</div>
+                                    <div class="array-element color-3d">4</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Matrix 1 -->
+                        <div class="flex flex-col items-center">
+                            <p class="font-mono text-xs mb-1 text-gray-600">Axis 0, Index 1</p>
+                            <div class="flex flex-col gap-2 p-3 border rounded-md bg-white shadow-sm">
+                                <div class="flex justify-center gap-2">
+                                    <div class="array-element color-3d">5</div>
+                                    <div class="array-element color-3d">6</div>
+                                </div>
+                                <div class="flex justify-center gap-2">
+                                    <div class="array-element color-3d">7</div>
+                                    <div class="array-element color-3d">8</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code># Create a 3D array 
+# (2 matrices, each with 2 rows and 2 columns)
+arr_3d = np.array([[[1, 2],
+                    [3, 4]],
+                   
+                   [[5, 6],
+                    [7, 8]]])
+
+print(arr_3d.ndim) # 3
+print(arr_3d.shape) # (2, 2, 2)</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Visualizing dimensions makes complex data structures easier to understand.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

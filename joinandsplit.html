@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: Joining & Splitting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .array-container {
+            display: flex;
+            gap: 4px;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            border: 2px solid #e0e0e0;
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            font-weight: 500;
+            color: white;
+        }
+        .array-1 { background-color: #60a5fa; } /* blue-400 */
+        .array-2 { background-color: #4ade80; } /* green-400 */
+        .result-array { background-color: #a78bfa; } /* violet-400 */
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Visualizing NumPy</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">An Interactive Guide to Joining and Splitting Arrays</p>
+        </header>
+
+        <!-- Joining Arrays Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-blue-500">Joining Arrays</h2>
+            <p class="mb-8 text-lg">Joining means putting the contents of two or more arrays into a single array. NumPy provides several functions for this, each behaving differently.</p>
+
+            <!-- np.concatenate -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">1. `np.concatenate`</h3>
+                <p class="mb-4">The most general-purpose joining function. It joins a sequence of arrays along a specified axis.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                        <div class="flex flex-col items-center gap-4">
+                            <!-- Input Arrays -->
+                            <div class="flex items-center gap-4">
+                                <div class="array-container">
+                                    <div class="array-element array-1">1</div>
+                                    <div class="array-element array-1">2</div>
+                                </div>
+                                <span class="text-2xl font-bold">+</span>
+                                <div class="array-container">
+                                    <div class="array-element array-2">3</div>
+                                    <div class="array-element array-2">4</div>
+                                </div>
+                            </div>
+                            <!-- Arrow -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                            <!-- Result Array -->
+                            <div class="array-container">
+                                <div class="array-element result-array">1</div>
+                                <div class="array-element result-array">2</div>
+                                <div class="array-element result-array">3</div>
+                                <div class="array-element result-array">4</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>import numpy as np
+
+a = np.array([1, 2])
+b = np.array([3, 4])
+
+# Concatenate along axis 0 (default for 1D)
+result = np.concatenate((a, b))
+# result is: [1 2 3 4]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- np.vstack -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">2. `np.vstack` (Vertical Stack)</h3>
+                <p class="mb-4">Stacks arrays in sequence vertically (row-wise). This is equivalent to `concatenate` along axis 0 for 2D arrays.</p>
+                
+                 <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                        <div class="flex flex-col items-center gap-2">
+                             <div class="array-container flex-col">
+                                <div class="flex gap-1">
+                                    <div class="array-element array-1">1</div><div class="array-element array-1">2</div>
+                                </div>
+                             </div>
+                             <span class="text-2xl font-bold">+</span>
+                             <div class="array-container flex-col">
+                                <div class="flex gap-1">
+                                    <div class="array-element array-2">3</div><div class="array-element array-2">4</div>
+                                </div>
+                             </div>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                             <div class="array-container flex-col">
+                                <div class="flex gap-1"><div class="array-element result-array">1</div><div class="array-element result-array">2</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">3</div><div class="array-element result-array">4</div></div>
+                             </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>a = np.array([1, 2])
+b = np.array([3, 4])
+
+# Stack vertically
+result = np.vstack((a, b))
+# result is:
+# [[1 2]
+#  [3 4]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- np.hstack -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">3. `np.hstack` (Horizontal Stack)</h3>
+                <p class="mb-4">Stacks arrays in sequence horizontally (column-wise). This is equivalent to `concatenate` along axis 1.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                         <div class="flex flex-col items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <div class="array-container flex-col"><div class="array-element array-1">1</div><div class="array-element array-1">3</div></div>
+                                <span class="text-2xl font-bold">+</span>
+                                <div class="array-container flex-col"><div class="array-element array-2">2</div><div class="array-element array-2">4</div></div>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                            <div class="array-container">
+                                <div class="flex gap-1"><div class="array-element result-array">1</div><div class="array-element result-array">2</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">3</div><div class="array-element result-array">4</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>a = np.array([[1], [3]])
+b = np.array([[2], [4]])
+
+# Stack horizontally
+result = np.hstack((a, b))
+# result is:
+# [[1 2]
+#  [3 4]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Splitting Arrays Section -->
+        <section>
+            <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-green-500">Splitting Arrays</h2>
+            <p class="mb-8 text-lg">Splitting is the reverse of joining: breaking one array into multiple smaller ones.</p>
+
+            <!-- np.split -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">1. `np.split`</h3>
+                <p class="mb-4">Splits an array into multiple sub-arrays. You can specify the number of equal-sized sub-arrays or the exact split points.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                        <div class="flex flex-col items-center gap-4">
+                            <!-- Input Array -->
+                            <div class="array-container">
+                                <div class="array-element result-array">1</div><div class="array-element result-array">2</div><div class="array-element result-array">3</div><div class="array-element result-array">4</div><div class="array-element result-array">5</div><div class="array-element result-array">6</div>
+                            </div>
+                            <!-- Arrow -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                            <!-- Result Arrays -->
+                            <div class="flex items-center gap-4">
+                               <div class="array-container"><div class="array-element array-1">1</div><div class="array-element array-1">2</div></div>
+                               <div class="array-container"><div class="array-element array-2">3</div><div class="array-element array-2">4</div></div>
+                               <div class="array-container" style="background-color: #f472b6;"><div class="array-element" style="background-color: #f472b6;">5</div><div class="array-element" style="background-color: #f472b6;">6</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>x = np.arange(1, 7)
+# x is: [1 2 3 4 5 6]
+
+# Split into 3 equal arrays
+result = np.split(x, 3)
+# result is: [array([1, 2]), 
+#             array([3, 4]), 
+#             array([5, 6])]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- np.hsplit -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">2. `np.hsplit` (Horizontal Split)</h3>
+                <p class="mb-4">Splits an array horizontally. This is equivalent to `split` with `axis=1`.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                        <div class="flex flex-col items-center gap-4">
+                            <!-- Input Array -->
+                             <div class="array-container">
+                                <div class="flex gap-1"><div class="array-element result-array">1</div><div class="array-element result-array">2</div><div class="array-element result-array">3</div><div class="array-element result-array">4</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">5</div><div class="array-element result-array">6</div><div class="array-element result-array">7</div><div class="array-element result-array">8</div></div>
+                            </div>
+                            <!-- Arrow -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                            <!-- Result Arrays -->
+                            <div class="flex items-center gap-4">
+                                <div class="array-container flex-col"><div class="array-element array-1">1</div><div class="array-element array-1">5</div></div>
+                                <div class="array-container flex-col"><div class="array-element array-2">2</div><div class="array-element array-2">6</div></div>
+                                <div class="array-container flex-col" style="background-color: #f472b6;"><div class="array-element" style="background-color: #f472b6;">3</div><div class="array-element" style="background-color: #f472b6;">7</div></div>
+                                <div class="array-container flex-col" style="background-color: #fb923c;"><div class="array-element" style="background-color: #fb923c;">4</div><div class="array-element" style="background-color: #fb923c;">8</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>x = np.arange(1, 9).reshape(2, 4)
+# x is:
+# [[1 2 3 4]
+#  [5 6 7 8]]
+
+# Split into 4 arrays
+result = np.hsplit(x, 4)
+# result is a list of 4 arrays:
+# [ [[1],[5]], [[2],[6]], ... ]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- np.vsplit -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-2xl font-semibold mb-4">3. `np.vsplit` (Vertical Split)</h3>
+                <p class="mb-4">Splits an array vertically. This is equivalent to `split` with `axis=0`.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <!-- Visual Representation -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Visual</p>
+                        <div class="flex flex-col items-center gap-4">
+                            <!-- Input Array -->
+                             <div class="array-container flex-col">
+                                <div class="flex gap-1"><div class="array-element result-array">1</div><div class="array-element result-array">2</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">3</div><div class="array-element result-array">4</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">5</div><div class="array-element result-array">6</div></div>
+                                <div class="flex gap-1"><div class="array-element result-array">7</div><div class="array-element result-array">8</div></div>
+                            </div>
+                            <!-- Arrow -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                            <!-- Result Arrays -->
+                            <div class="flex items-center gap-4">
+                               <div class="array-container flex-col"><div class="flex gap-1"><div class="array-element array-1">1</div><div class="array-element array-1">2</div></div><div class="flex gap-1"><div class="array-element array-1">3</div><div class="array-element array-1">4</div></div></div>
+                               <div class="array-container flex-col"><div class="flex gap-1"><div class="array-element array-2">5</div><div class="array-element array-2">6</div></div><div class="flex gap-1"><div class="array-element array-2">7</div><div class="array-element array-2">8</div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Code Example -->
+                    <div>
+                        <p class="font-medium mb-2 text-center">Code</p>
+                        <div class="code-block">
+<pre><code>x = np.arange(1, 9).reshape(4, 2)
+# x is:
+# [[1 2]
+#  [3 4]
+#  [5 6]
+#  [7 8]]
+
+# Split into 2 arrays
+result = np.vsplit(x, 2)
+# result is a list of 2 arrays:
+# [ [[1,2],[3,4]], [[5,6],[7,8]] ]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Created to make NumPy intuitive and fun. Happy coding!</p>
+        </footer>
+    </div>
+
+</body>
+</html>

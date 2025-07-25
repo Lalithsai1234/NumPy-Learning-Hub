@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing NumPy: The Sort Method</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .array-vis {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            min-height: 180px;
+        }
+        .array-element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            color: white;
+            font-size: 1rem;
+        }
+        .color-original { background-color: #f472b6; } /* pink-400 */
+        .color-sorted { background-color: #34d399; } /* emerald-400 */
+        
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .output-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #334155;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">The NumPy `sort()` Method</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">A Visual Guide to Ordering Array Data</p>
+        </header>
+
+        <!-- Sorting with np.sort() -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-emerald-500">How `np.sort()` Works</h2>
+            <p class="mb-6 text-lg">The `np.sort()` function takes an array and returns a new, sorted <strong>copy</strong> of it. This is a crucial point: the original array is not modified in any way.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <!-- Visual Representation -->
+                <div class="array-vis">
+                     <p class="font-medium mb-4 text-center text-gray-700">Visualizing the Sort Operation</p>
+                     <div class="flex flex-col items-center gap-4">
+                        <!-- Original Array -->
+                        <div>
+                            <p class="font-mono text-sm text-center mb-1">1. Original Array</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-original">9</div>
+                                <div class="array-element color-original">2</div>
+                                <div class="array-element color-original">6</div>
+                                <div class="array-element color-original">1</div>
+                            </div>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+
+                        <!-- New Sorted Array -->
+                         <div>
+                            <p class="font-mono text-sm text-center mb-1">2. New Sorted Array (A Copy is Created)</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-sorted">1</div>
+                                <div class="array-element color-sorted">2</div>
+                                <div class="array-element color-sorted">6</div>
+                                <div class="array-element color-sorted">9</div>
+                            </div>
+                        </div>
+                        
+                         <!-- Unchanged Original Array -->
+                        <div class="mt-4">
+                            <p class="font-mono text-sm text-center mb-1">3. Original Array Remains Unchanged</p>
+                            <div class="flex justify-center items-center gap-2">
+                                <div class="array-element color-original">9</div>
+                                <div class="array-element color-original">2</div>
+                                <div class="array-element color-original">6</div>
+                                <div class="array-element color-original">1</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Code Example -->
+                <div>
+                    <p class="font-medium mb-2 text-center text-gray-700">Code</p>
+                    <div class="code-block">
+<pre><code>import numpy as np
+
+original_arr = np.array([9, 2, 6, 1])
+print(f"Original array: {original_arr}")
+
+# np.sort() returns a new, sorted copy
+sorted_arr = np.sort(original_arr)
+
+print(f"Sorted copy:    {sorted_arr}")
+print(f"Original array is NOT changed: {original_arr}")
+</code></pre>
+                    </div>
+                    <p class="font-medium mt-4 mb-2 text-center text-gray-700">Output</p>
+                    <div class="output-box">Original array: [9 2 6 1]
+Sorted copy:    [1 2 6 9]
+Original array is NOT changed: [9 2 6 1]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- When to use np.sort() -->
+        <section class="card">
+            <h2 class="text-3xl font-bold mb-4 pb-2 border-b-2 border-gray-400">When Should You Use `np.sort()`?</h2>
+            <p class="mb-4 text-lg">You should use this method whenever you need an ordered version of your data but you also need to preserve the original order for other purposes.</p>
+            <ul class="list-disc list-inside space-y-3 text-gray-700 text-lg">
+                <li>
+                    <strong>Data Analysis:</strong> To find the smallest or largest values (min/max), percentiles, or the median of your data without losing the original sequence.
+                </li>
+                <li>
+                    <strong>Preparing for Searching:</strong> Functions like `np.searchsorted()` require the array to be sorted. You would first create a sorted copy to use with that function.
+                </li>
+                <li>
+                    <strong>Safe Operations:</strong> When you are writing a function and want to avoid side effects. By creating a sorted copy, you ensure your function doesn't accidentally change the original data that was passed into it.
+                </li>
+            </ul>
+        </section>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">Use `np.sort()` for a safe, non-destructive way to get an ordered version of your array.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
